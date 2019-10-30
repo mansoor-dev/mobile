@@ -1,5 +1,6 @@
 package com.axiomtelecom.assignment.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -7,20 +8,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.axiomtelecom.assignment.repository.MobileCustomeRepo;
 import com.axiomtelecom.assignment.response.HardwareResponse;
 import com.axiomtelecom.assignment.response.MobileResponse;
 import com.axiomtelecom.assignment.response.ReleasesResponse;
-
-import junit.framework.Assert;
 
 @SuppressWarnings("deprecation")
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +35,7 @@ class MobileServiceTest {
 	HardwareResponse hardwareResponse = new HardwareResponse();
 	List<MobileResponse> mobileResponseList = new ArrayList<MobileResponse>();
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
@@ -62,13 +61,13 @@ class MobileServiceTest {
 		map.put("brand", "apple");
 
 		List<Object[]> results = new ArrayList<Object[]>();
-		Object[] info = new Object[10];
+		Object[] info = new Object[11];
 		info[0] = 1L;
 		info[1] = "Apple";
 		info[2] = "iphone7";
 		info[3] = "image.jpg";
 		info[4] = "2018 October";
-		info[5] = 1000;
+		info[5] = 1000L;
 		info[6] = "Nano";
 		info[7] = "1.6 pixel";
 		info[8] = "Yes";
@@ -78,7 +77,7 @@ class MobileServiceTest {
 
 		when(repo.search(map)).thenReturn(results);
 		mobileResponseList = mobileService.getMobileDetails(map);
-		Assert.assertEquals(mobileResponseList.size(), 1);
+		assertEquals(1,mobileResponseList.size());
 
 	}
 
