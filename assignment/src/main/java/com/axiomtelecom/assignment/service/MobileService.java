@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.axiomtelecom.assignment.exception.MobileNotFoundException;
 import com.axiomtelecom.assignment.repository.MobileCustomeRepo;
 import com.axiomtelecom.assignment.response.HardwareResponse;
 import com.axiomtelecom.assignment.response.MobileResponse;
@@ -17,13 +18,19 @@ public class MobileService implements MobileServiceInterf {
 
 	@Autowired
 	MobileCustomeRepo repo;
-
+	
+	
 	@Override
-	public List<MobileResponse> getMobileDetails(Map<String, String> requestMap) throws Exception {
+	public List<MobileResponse> getMobileDetails(Map<String, String> requestMap) throws MobileNotFoundException {
 		List<MobileResponse> mobileResponseList = new ArrayList<MobileResponse>();
-
-		List<Object[]> resultList = repo.search(requestMap);
-
+		List<Object[]> resultList=null;
+		try {
+			
+		 resultList = repo.search(requestMap);
+		}
+		catch (Exception e) {
+			throw new MobileNotFoundException("Mobile Data not found for"+requestMap);
+		}
 		for (int i = 0; i < resultList.size(); i++) {
 
 			Object[] arr = resultList.get(i);
